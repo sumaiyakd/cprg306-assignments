@@ -22,10 +22,16 @@ export default function Home() {
           </li>
           <li>Save and see your changes instantly.</li>
           <li className="mb-2">
+            <a href="/week-2" className="text-blue-500 hover:underline">Week 2</a>
+          </li>
+          <li className="mb-2">
             <a href="/week-3" className="text-blue-500 hover:underline">Week 3</a>
           </li>
           <li className="mb-2">
             <a href="/week-4" className="text-blue-500 hover:underline">Week 4</a>
+          </li>
+          <li className="mb-2">
+            <a href="/week-5" className="text-blue-500 hover:underline">Week 5</a>
           </li>
         </ol>
 
