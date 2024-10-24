@@ -1,97 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Item from './item';
+import itemsData from './items.json'; // Adjust the import path as needed
 
 const ItemList = () => {
-  // Defining the item objects
-  const item1 = {
-    name: "milk, 4 L 🥛",
-    quantity: 1,
-    category: "dairy",
-  };
+  const [sortBy, setSortBy] = useState('name'); // Initialize state variable
 
-  const item2 = {
-    name: "bread 🍞",
-    quantity: 2,
-    category: "bakery",
-  };
+  // Sort the items based on the sortBy state
+  const sortedItems = [...itemsData].sort((a, b) => {
+    if (sortBy === 'name') {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy === 'category') {
+      return a.category.localeCompare(b.category);
+    }
+    return 0;
+  });
 
-  const item3 = {
-    name: "eggs, dozen 🥚",
-    quantity: 2,
-    category: "dairy",
-  };
-
-  const item4 = {
-    name: "bananas 🍌",
-    quantity: 6,
-    category: "produce",
-  };
-
-  const item5 = {
-    name: "broccoli 🥦",
-    quantity: 3,
-    category: "produce",
-  };
-
-  const item6 = {
-    name: "chicken breasts, 1 kg 🍗",
-    quantity: 1,
-    category: "meat",
-  };
-
-  const item7 = {
-    name: "pasta sauce 🍝",
-    quantity: 3,
-    category: "canned goods",
-  };
-
-  const item8 = {
-    name: "spaghetti, 454 g 🍝",
-    quantity: 2,
-    category: "dry goods",
-  };
-
-  const item9 = {
-    name: "toilet paper, 12 pack 🧻",
-    quantity: 1,
-    category: "household",
-  };
-
-  const item10 = {
-    name: "paper towels, 6 pack",
-    quantity: 1,
-    category: "household",
-  };
-
-  const item11 = {
-    name: "dish soap 🍽️",
-    quantity: 1,
-    category: "household",
-  };
-
-  const item12 = {
-    name: "hand soap 🧼",
-    quantity: 4,
-    category: "household",
-  };
-
-  // Creating an array of items
-  const items = [
-    item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12
-  ];
-
-  // Rendering the list of items using the Item component
   return (
-    <ul className="max-w-xl mx-auto">
-      {items.map((item, index) => (
-        <Item 
-          key={index}
-          name={item.name}
-          quantity={item.quantity}
-          category={item.category}
-        />
-      ))}
-    </ul>
+    <div className="max-w-xl mx-auto">
+      <div className="mb-4">
+        <button
+          onClick={() => setSortBy('name')}
+          className={`mr-2 px-4 py-2 rounded ${sortBy === 'name' ? 'bg-blue-500' : 'bg-gray-500'}`}
+        >
+          Sort by Name
+        </button>
+        <button
+          onClick={() => setSortBy('category')}
+          className={`px-4 py-2 rounded ${sortBy === 'category' ? 'bg-blue-500' : 'bg-gray-500'}`}
+        >
+          Sort by Category
+        </button>
+      </div>
+      <ul>
+        {sortedItems.map((item) => (
+          <Item
+            key={item.id} // Use the item's id as the key
+            name={item.name}
+            quantity={item.quantity}
+            category={item.category}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 
