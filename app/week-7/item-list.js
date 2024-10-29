@@ -54,17 +54,18 @@ export default function ItemList({ items }) {
           Object.keys(groupedItems).sort().map(category => (
             <div key={category}>
               <h3>{category}</h3>
-              <ul>
-                {groupedItems[category].map(item => (
-                  <li key={item.id}>
-                    <Item 
-                      name={item.name}
-                      quantity={item.quantity}
-                      category={item.category}
-                    />
-                  </li>
-                ))}
-              </ul>
+              <ul key={category}>
+  {groupedItems[category].map(item => (
+    <li key={item.id}>
+      <Item 
+        name={item.name}
+        quantity={item.quantity}
+        category={item.category}
+      />
+    </li>
+  ))}
+</ul>
+
             </div>
           ))
         ) : (
