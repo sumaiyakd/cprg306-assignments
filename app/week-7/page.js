@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import ItemList from './item-list';
-import NewItem from './new-item';
+import NewItem from './new-items';
 import itemsData from './items.json';
 
 const Page = () => {
