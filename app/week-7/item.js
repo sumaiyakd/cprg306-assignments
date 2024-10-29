@@ -1,14 +1,13 @@
+// item.js
 import React from 'react';
 
 const Item = ({ name, quantity, category }) => {
-  return (
-    <li className="flex justify-between items-center p-4 bg-gray-800 text-white rounded-md mb-4 shadow-lg">
-      <div>
-        <span className="font-bold text-lg">{name}</span>
-        <p className="text-sm text-gray-400">Buy {quantity} in {category}</p>
-      </div>
-    </li>
-  );
+    return (
+        <div className="bg-gray-800 text-white p-3 mb-4 rounded shadow-lg">
+            <div className="text-x1 font-bold">{name}</div>
+            <div className="text-sm opacity-75">Buy {quantity} in {category}</div>
+        </div>
+    );
 };
 
 export default Item;
