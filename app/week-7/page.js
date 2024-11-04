@@ -1,28 +1,27 @@
-'use client'; // Ensure client-side component
+"use client";
 
 import React, { useState } from 'react';
 import ItemList from './item-list';
 import NewItem from './new-item';
-import itemsData from './items.json'; // Import items.json as itemsData
+import itemsData from './items.json';
 
 const Page = () => {
-  // Initialize state variable with data from items.json
+  // Initialize state with data from items.json
   const [items, setItems] = useState(itemsData);
 
-  // Event handler function to add new items
-  const handleAddItem = (item) => {
-    // Add a random ID to the item object
-    const newItem = { ...item, id: Math.random().toString(36).substring(2, 15) };
-    // Update the state with the new item added
-    setItems((prevItems) => [...prevItems, newItem]);
+  // Event handler for adding new items
+  const handleAddItem = (newItem) => {
+    setItems([...items, newItem]);
   };
 
   return (
-    <main className="min-h-screen bg-gray-900 p-8">
-      <h1 className="text-3xl font-bold text-center text-white mb-8">Shopping List</h1>
-      {/* Pass handleAddItem to NewItem and items to ItemList */}
-      <NewItem onAddItem={handleAddItem} />
-      <ItemList items={items} />
+    <main className="bg-gray-900 min-h-screen p-5">
+      <div className="w-full max-w-lg">
+        <h1 className="text-white text-3xl font-bold mb-5">Shopping List</h1>
+        {/* Pass items to ItemList and handleAddItem to NewItem */}
+        <NewItem onAddItem={handleAddItem} />
+        <ItemList items={items} />
+      </div>
     </main>
   );
 };

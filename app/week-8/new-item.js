@@ -1,4 +1,4 @@
-"use client"; 
+"use client"; // Ensures this runs client-side in Next.js
 
 import { useState } from 'react';
 
@@ -7,8 +7,8 @@ export default function NewItem({ onAddItem }) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Produce");
 
-  const increment = () => setQuantity(prev => prev + 1);
-  const decrement = () => setQuantity(prev => (prev > 1 ? prev - 1 : prev));
+  const increment = () => setQuantity((prev) => prev + 1);
+  const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -42,7 +42,7 @@ export default function NewItem({ onAddItem }) {
       <div className="bg-blue-950 shadow px-6 py-4 rounded-md w-full max-w-md">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <input 
+            <input
               id="name"
               type="text"
               placeholder="Item name"
@@ -57,7 +57,7 @@ export default function NewItem({ onAddItem }) {
             <div className="flex items-center bg-white shadow px-6 py-2 rounded-md">
               <span className="text-lg font-medium mx-4 text-black">{quantity}</span>
               <div className="flex items-center">
-                <button 
+                <button
                   type="button"
                   onClick={decrement}
                   disabled={quantity === 1}
@@ -65,16 +65,16 @@ export default function NewItem({ onAddItem }) {
                 >
                   -
                 </button>
-                <button 
+                <button
                   type="button"
-                  onClick={increment} 
+                  onClick={increment}
                   className="text-white bg-blue-500 hover:bg-blue-600 rounded-md p-2 h-8 w-12 ml-2 flex justify-center items-center"
                 >
                   +
                 </button>
               </div>
             </div>
-            <select 
+            <select
               id="category"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
@@ -101,6 +101,6 @@ export default function NewItem({ onAddItem }) {
           </div>
         </form>
       </div>
-    </div>        
+    </div>
   );
 }
