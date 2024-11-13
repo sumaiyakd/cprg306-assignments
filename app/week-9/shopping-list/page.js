@@ -1,52 +1,48 @@
-"use client";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useUserAuth } from "../_utils/auth-context";
-import ItemList from "./item-list";
+'use client';
 import NewItem from "./new-item";
+import ItemList from "./item-list";
 import MealIdeas from "./meal-ideas";
-import itemsData from "./items.json";
+import Items from "./items.json";
+import { useState } from 'react'
+import { useUserAuth } from "../_utils/auth-context";
 
-export default function ShoppingListPage() {
-  const { user } = useUserAuth();
-  const router = useRouter();
+export default function Page() {
+    const { user } = useUserAuth();
 
-  useEffect(() => {
-    if (!user) {
-      router.push("/week-9"); // Redirect to landing page if not logged in
-    }
-  }, [user, router]);
 
-  if (!user) return null; // Don't render if the user isn't logged in
+    if (!user) return (
+        <main style={{ textAlign: "center", marginTop: "50px" }}>
+            <p>
+                Please login to access this page!
+            </p>
+        </main>
+    );
+    
+    const [itemsData, setItemsData] = useState(Items);
+    const [selectedItemName, setSelectedItemName] = useState('');
 
-  const [items, setItems] = useState(itemsData);
-  const [selectedItemName, setSelectedItemName] = useState("");
+    const handleAddItem = (newItem) => {
+        setItemsData(prevItems => [...prevItems, newItem]);
+    };
 
-  const cleanItemName = (itemName) => {
-    return itemName.split(",")[0].replace(/[^a-zA-Z ]/g, "").trim();
-  };
+    const handleItemSelect = (item) => {
+        const cleanedName = item.name
+            .split(',')[0]
+            .trim()
+            .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+        setSelectedItemName(cleanedName);
+    };
 
-  const handleAddItem = (newItem) => {
-    setItems([...items, newItem]);
-  };
-
-  const handleItemSelect = (itemName) => {
-    const cleanName = cleanItemName(itemName);
-    setSelectedItemName(cleanName);
-  };
-
-  return (
-    <main className="bg-gray-900 min-h-screen p-5">
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 p-4">
-          <h1 className="text-white text-3xl font-bold mb-5">Shopping List</h1>
-          <NewItem onAddItem={handleAddItem} />
-          <ItemList items={items} onItemSelect={handleItemSelect} />
-        </div>
-        <div className="w-full md:w-1/2 p-4">
-          {selectedItemName && <MealIdeas ingredient={selectedItemName} />}
-        </div>
-      </div>
-    </main>
-  );
+    return (
+        <main className="min-h-screen">
+            <h1 className="text-4xl font-bold">Shopping List</h1>
+            <div className="flex flex-row">
+                    <div className="flex flex-col">
+                    <NewItem onAddItem={handleAddItem} />
+                    <ItemList items={itemsData} onItemSelect={handleItemSelect} />
+                    </div>
+                    <MealIdeas ingredient={selectedItemName} />
+            </div>
+        </main>
+    );
 }
