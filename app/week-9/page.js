@@ -1,41 +1,46 @@
-"use client";
+"use client"
+// Import the useUserAuth hook
 import React from "react";
-import { useUserAuth } from "./_utils/auth-context";
 import Link from 'next/link';
+import { useUserAuth } from "./_utils/auth-context";
+ 
+// Display some of the user's information
+const Page = () => {
+    // Use the useUserAuth hook to get the user object and the login and logout functions
+    const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
 
-export default function LandingPage() {
-  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
+    const handleLogin = async() => {
+        try {
+            await gitHubSignIn();
+        } catch (error) {
+            console.error("Login failed: ", error);
+        }
+    }
 
-  return (
-    <main className="bg-gray-900 min-h-screen flex items-center justify-center">
-      <div className="text-center text-white">
-        {!user ? (
-          <div>
-            <h1 className="text-3xl font-bold mb-5">Welcome to Our App</h1>
-            <button 
-              onClick={gitHubSignIn}
-              className="bg-blue-500 px-4 py-2 rounded text-white">
-              Login with GitHub
-            </button>
-          </div>
-        ) : (
-          <div>
-            <p>
-              Welcome, {user.displayName} ({user.email})
-            </p>
-            <button 
-              onClick={firebaseSignOut}
-              className="bg-red-500 px-4 py-2 rounded mt-4">
-              Logout
-            </button>
-            <div className="mt-4">
-              <Link href="/week-9/shopping-list">
-                <a className="text-blue-300 underline">Go to Shopping List</a>
-              </Link>
-            </div>
-          </div>
-        )}
-      </div>
-    </main>
-  );
-}
+    const handleLogout = async() => {
+        try {
+            await firebaseSignOut();
+        } catch (error) {
+            console.error("Logout failed: ", error);
+        }
+    }
+
+    return (
+        <main style={{ textAlign: "center", marginTop: "50px" }}>    
+            {!user ? (
+                <button onClick={handleLogin} className="py-2 px-4 bg-green-600 rounded-md w-50 font-bold text-white hover:bg-green-500">Login with Github </button>
+            ) : (
+                <div>
+                <p>Welcome , {user.displayName} ({user.email})</p>
+                <br />
+                <Link href="/week-9/shopping-list">Go to Shopping List</Link>
+                <br />
+                <br />
+                <button onClick={handleLogout} className="py-2 px-4 bg-green-600 rounded-md w-50 font-bold text-white hover:bg-green-500">Logout</button>
+                </div>
+            )}
+        </main>
+    );
+};
+
+export default Page;
